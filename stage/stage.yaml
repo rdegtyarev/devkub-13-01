@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stage
+  name: stage
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stage
+  template:
+    metadata:
+      labels:
+        app: stage
+    spec:
+      containers:
+        - image: rdegtyarev/netology-hw-13.01-back:latest
+          imagePullPolicy: IfNotPresent
+          name: back-stage
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ports:
+            - containerPort: 9000
+        - image: rdegtyarev/netology-hw-13.01:front
+          imagePullPolicy: IfNotPresent
+          name: front-stage
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stage-service
+  namespace: default
+spec:
+  ports:
+    - name: back
+      port: 9000
+    - name: front
+      port: 80
+  selector:
+    app: stage
+  type: ClusterIP
