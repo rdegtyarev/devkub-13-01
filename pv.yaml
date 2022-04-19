@@ -10,3 +10,26 @@ spec:
     storage: 10Gi
   hostPath:
     path: /data/pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-prod
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /data/pv-prod
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stage
