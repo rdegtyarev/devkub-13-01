@@ -16,7 +16,7 @@ spec:
         app: stage
     spec:
       containers:
-        - image: rdegtyarev/netology-hw-13.01-back:latest
+        - image: rdegtyarev/netology-hw-13.01-back
           imagePullPolicy: IfNotPresent
           name: back-stage
           resources:
