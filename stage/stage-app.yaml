@@ -16,7 +16,7 @@ spec:
         app: stage
     spec:
       containers:
-        - image: rdegtyarev/netology-hw-13.01-back # предварительно собрал image приложения и запушил в dockerhub
+        - image: rdegtyarev/netology-hw-13.01-back:latest # предварительно собрал image приложения и запушил в dockerhub
           imagePullPolicy: IfNotPresent
           name: back-stage # контейнер для back
           resources:
@@ -30,8 +30,8 @@ spec:
             - containerPort: 9000
           env:
             - name: DATABASE_URL # передаем env с настройкой подключения к базе данных
-              value: "postgres://postgres:postgres@postgres.default:5432/news" # обращаемся к сервису postgres в namespase default (описан в манифесте stage-db.yaml)
-        - image: rdegtyarev/netology-hw-13.01-front # предварительно собрал image приложения и запушил в dockerhub
+              value: "postgres://postgres:postgres@stage-db-srv.stage:5432/news" # обращаемся к сервису postgres в namespase default (описан в манифесте stage-db.yaml)
+        - image: rdegtyarev/netology-hw-13.01-front:latest # предварительно собрал image приложения и запушил в dockerhub
           imagePullPolicy: IfNotPresent
           name: front-stage # контейнер для front
           resources:

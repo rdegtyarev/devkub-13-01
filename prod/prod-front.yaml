@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: back
-  name: back
+    app: front
+  name: front
   namespace: prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: back
+      app: front
   template:
     metadata:
       labels:
-        app: back
+        app: front
     spec:
       containers:
-        - image: rdegtyarev/netology-hw-13.01-back
+        - image: rdegtyarev/netology-hw-13.01-front:latest
           imagePullPolicy: IfNotPresent
-          name: back
+          name: front
           resources:
             limits:
               cpu: 200m
@@ -27,20 +27,18 @@ spec:
               cpu: 100m
               memory: 128Mi
           ports:
-            - containerPort: 9000
-          env:
-            - name: DATABASE_URL
-              value: "postgres://postgres:postgres@postgres.default:5432/news"
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: back
+  name: prod-front-srv
   namespace: prod
 spec:
   ports:
-    - name: back
-      port: 9000
+    - name: front
+      port: 8080
+      targetPort: 80
   selector:
-    app: back
+    app: front
   type: ClusterIP
